@@ -6,12 +6,15 @@
   "license": "MIT",
   "scripts": {
     "build:tsc": "tsc -p .",
-    "start:tsc": "tsc -p . -w"
+    "start:tsc": "tsc -p . -w",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "dependencies": {
     "nkzn-todo-domain": "1.0.0"
   },
   "devDependencies": {
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.12.0",
     "typescript": "^2.8.3"
   }
 }

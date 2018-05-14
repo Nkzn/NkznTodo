@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "build:tsc": "lerna run build:tsc"
+    "build:tsc": "lerna run build:tsc",
+    "lint": "lerna run lint"
   },
   "devDependencies": {
     "lerna": "^2.11.0"

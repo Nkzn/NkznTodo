@@ -1,0 +1,14 @@
+{
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "rules": {
+    "ordered-imports": { "severity": "none" },
+    "interface-name": { "severity": "none" },
+    "object-literal-sort-keys": { "severity": "none" }
+  },
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  }
+}
