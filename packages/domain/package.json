@@ -5,7 +5,8 @@
   "typings": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build:tsc": "tsc -p ."
+    "build:tsc": "tsc -p .",
+    "start:tsc": "tsc -p . -w"
   },
   "devDependencies": {
     "typescript": "^2.8.3"

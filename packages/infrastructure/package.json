@@ -2,10 +2,11 @@
   "name": "nkzn-todo-infrastructure",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "typings": "lib/index.d.ts",
+  "typings": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build:tsc": "tsc -p ."
+    "build:tsc": "tsc -p .",
+    "start:tsc": "tsc -p . -w"
   },
   "dependencies": {
     "nkzn-todo-domain": "1.0.0"
