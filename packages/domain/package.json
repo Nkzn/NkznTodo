@@ -5,5 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build:tsc": "tsc -p ."
+  },
+  "devDependencies": {
+    "typescript": "^2.8.3"
   }
 }
