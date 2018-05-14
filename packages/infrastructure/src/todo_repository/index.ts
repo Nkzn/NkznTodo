@@ -1,5 +1,7 @@
 import { Todo } from "nkzn-todo-domain";
 
+const STRAGE_KEY_TODO = "todo";
+
 export class TodoRepository {
 
   private localStorage: Storage;
@@ -7,14 +9,14 @@ export class TodoRepository {
   constructor() {
     this.localStorage = window.localStorage;
 
-    if (!this.localStorage["todo"]) {
-      this.localStorage["todo"] = JSON.stringify([]);
+    if (!this.localStorage[STRAGE_KEY_TODO]) {
+      this.localStorage[STRAGE_KEY_TODO] = JSON.stringify([]);
     }
   }
 
   async fetch(id: number): Promise<Todo> {
-    const todoList: Todo[] = JSON.parse(this.localStorage["todo"]);
-    const todo = todoList.find(todo => todo.id === id);
+    const todoList: Todo[] = JSON.parse(this.localStorage[STRAGE_KEY_TODO]);
+    const todo = todoList.find(t => t.id === id);
 
     await sleep(500);
 
@@ -26,7 +28,7 @@ export class TodoRepository {
   }
 
   async fetchList(): Promise<Todo[]> {
-    const todoList: Todo[] = JSON.parse(this.localStorage["todo"]);
+    const todoList: Todo[] = JSON.parse(this.localStorage[STRAGE_KEY_TODO]);
 
     await sleep(1000);
 
@@ -41,10 +43,10 @@ export class TodoRepository {
       done
     }
 
-    const todoList: Todo[] = JSON.parse(this.localStorage["todo"]);
+    const todoList: Todo[] = JSON.parse(this.localStorage[STRAGE_KEY_TODO]);
     todoList.push(newTodo);
 
-    this.localStorage["todo"] = JSON.stringify(todoList);
+    this.localStorage[STRAGE_KEY_TODO] = JSON.stringify(todoList);
 
     await sleep(1000);
 

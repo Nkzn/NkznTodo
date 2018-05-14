@@ -30,7 +30,7 @@ class App extends React.PureComponent<Props> {
     this.onClickInit = this.onClickInit.bind(this);
   }
 
-  public render() {
+  render() {
     return (
       <div>
         <div>initial state: {JSON.stringify(this.props.todoList)}</div>
