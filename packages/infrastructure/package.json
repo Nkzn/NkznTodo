@@ -1,6 +1,9 @@
 {
   "name": "nkzn-todo-infrastructure",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "nkzn-todo-domain": "1.0.0"
+  }
 }
