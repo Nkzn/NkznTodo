@@ -3,7 +3,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "postinstall": "lerna bootstrap"
+    "postinstall": "lerna bootstrap",
+    "build:tsc": "lerna run build:tsc"
   },
   "devDependencies": {
     "lerna": "^2.11.0"
