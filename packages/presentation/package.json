@@ -2,10 +2,8 @@
   "name": "nkzn-todo-presentation",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
-    "nkzn-todo-appliation": "1.0.0",
-    "nkzn-todo-domain": "1.0.0",
-    "nkzn-todo-infrastructure": "1.0.0",    
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",

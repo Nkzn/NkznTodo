@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
+  "scripts": {
+    "build:tsc": "tsc -p ."
+  },
   "dependencies": {
-    "nkzn-todo-domain": "1.0.0",
-    "nkzn-todo-infrastructure": "1.0.0"
   }
 }

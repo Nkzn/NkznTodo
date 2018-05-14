@@ -1,6 +1,11 @@
 {
+  "name": "nkzn-todo",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ]
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "lerna bootstrap"
+  },
+  "devDependencies": {
+    "lerna": "^2.11.0"
+  }
 }

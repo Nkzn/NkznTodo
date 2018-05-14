@@ -2,5 +2,8 @@
   "name": "nkzn-todo-domain",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build:tsc": "tsc -p ."
+  }
 }
