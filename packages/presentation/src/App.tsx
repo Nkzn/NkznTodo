@@ -1,22 +1,47 @@
 import * as React from 'react';
-import './App.css';
+import { Dispatch } from 'redux';
+import { connect } from "react-redux";
 
-import logo from './logo.svg';
+import { AppState, TodoApplicationService } from "nkzn-todo-application";
+import { TodoListState } from 'nkzn-todo-domain';
 
-class App extends React.Component {
+interface IStateProps {
+  todoList: TodoListState
+}
+
+interface IDispatcherProps {
+  service: TodoApplicationService;
+}
+
+type Props = IStateProps & IDispatcherProps;
+
+const connector = connect(
+  (state: AppState) => ({
+    todoList: state.todoList
+  }) as IStateProps,
+  (dispatch: Dispatch) => ({
+    service: new TodoApplicationService(dispatch)
+  }) as IDispatcherProps
+)
+
+class App extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.onClickInit = this.onClickInit.bind(this);
+  }
+
   public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
+      <div>
+        <div>initial state: {JSON.stringify(this.props.todoList)}</div>
+        <button onClick={this.onClickInit}>init</button>
+      </div>    
     );
+  }
+
+  private onClickInit() {
+    this.props.service.init()
   }
 }
 
-export default App;
+export default connector(App);
