@@ -3,7 +3,8 @@
   "rules": {
     "ordered-imports": { "severity": "none" },
     "interface-name": { "severity": "none" },
-    "object-literal-sort-keys": { "severity": "none" }
+    "object-literal-sort-keys": { "severity": "none" },
+    "member-access": [true, "no-public"]
   },
   "linterOptions": {
     "exclude": [
