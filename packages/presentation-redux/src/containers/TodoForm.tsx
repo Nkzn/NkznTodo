@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { TodoApplicationService } from "nkzn-todo-application-redux";
-import { TodoAddForm, DispatcherProps } from "../components/TodoAddForm";
+import { TodoForm, DispatcherProps } from "../components/TodoForm";
 import { Dispatch } from "redux";
 
 function mapDispatchToProps(dispatch: Dispatch): DispatcherProps {
@@ -9,4 +9,4 @@ function mapDispatchToProps(dispatch: Dispatch): DispatcherProps {
   }
 }
 
-export default connect(void 0, mapDispatchToProps)(TodoAddForm);
+export default connect(void 0, mapDispatchToProps)(TodoForm);

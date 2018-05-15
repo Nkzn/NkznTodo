@@ -69,6 +69,22 @@ export class TodoRepository {
     }
   }
 
+  async updateTitle(id: string, title: string): Promise<any> {
+    const todoList: Todo[] = this.load();
+    const todo = todoList.find(t => t.id === id);
+
+    if (todo) {
+      todo.title = title;
+      this.save(todoList);
+
+      sleep(500);
+
+      return Promise.resolve();
+    } else {
+      return Promise.reject(`id:${id} is not found.`);
+    }
+  }
+
   private save(todoList: Todo[]) {
     this.localStorage[STRAGE_KEY_TODO] = JSON.stringify(todoList);
   }

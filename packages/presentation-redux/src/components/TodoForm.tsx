@@ -5,13 +5,18 @@ export interface DispatcherProps {
   service: TodoApplicationService;
 }
 
+type Props = DispatcherProps & {
+  idForEdit?: string;
+  onEnter?: () => void;
+}
+
 interface State {
   title: string;
 }
 
-export class TodoAddForm extends React.Component<DispatcherProps, State> {
+export class TodoForm extends React.Component<Props, State> {
 
-  constructor(props: DispatcherProps) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -21,7 +26,13 @@ export class TodoAddForm extends React.Component<DispatcherProps, State> {
 
   onKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
-      this.props.service.addNewTodo(this.state.title || "");
+      if (this.props.idForEdit) {
+        this.props.service.editTodo(this.props.idForEdit, this.state.title || "");
+        // tslint:disable-next-line:no-unused-expression
+        this.props.onEnter && this.props.onEnter();
+      } else {
+        this.props.service.addNewTodo(this.state.title || "");
+      }
       this.setState({ title: "" });
     }
   }

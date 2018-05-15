@@ -1,7 +1,7 @@
 import * as React from "react";
 import { TodoListState, Todo } from "nkzn-todo-domain";
 import { TodoApplicationService } from "nkzn-todo-application-redux";
-import TodoAddForm from "../containers/TodoAddForm";
+import TodoForm from "../containers/TodoForm";
 
 export interface StateProps {
   todoList: TodoListState;
@@ -13,7 +13,18 @@ export interface DispatcherProps {
 
 type Props = StateProps & DispatcherProps;
 
-export class TodoList extends React.Component<Props> {
+interface State {
+  editingTodoId?: string;
+}
+
+export class TodoList extends React.Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      editingTodoId: void 0
+    }
+  }
 
   componentDidMount() {
     this.props.service.init();
@@ -53,10 +64,18 @@ export class TodoList extends React.Component<Props> {
     return (
       <li key={todo.id}>
         <span style={{ display: "inline-block", width: 50 }}>#{todo.id}</span> 
-        <span style={{ display: "inline-block", width: 150 }} >{todo.title}</span>
+        <span onClick={() => this.onClickTitle(todo.id)} style={{ display: "inline-block", width: 150 }} >{this.state.editingTodoId === todo.id ? <TodoForm idForEdit={todo.id} onEnter={() => this.onEnter()} /> : todo.title}</span>
         <input onChange={(e) => this.onCheckChanged(e)} type="checkbox" name="todo" value={todo.id} checked={todo.done} />
       </li>
     );
+  }
+
+  private onEnter() {
+    this.setState({ editingTodoId: void 0 })
+  }
+
+  private onClickTitle(id: string) {
+    this.setState({ editingTodoId: id });
   }
 
   private onCheckChanged(e: React.ChangeEvent<HTMLInputElement>) {
@@ -67,7 +86,7 @@ export class TodoList extends React.Component<Props> {
   private renderInput() {
     return (
       <li key={"add"}>
-        <TodoAddForm />
+        <TodoForm />
       </li>
     );
   }

@@ -32,6 +32,16 @@ export class TodoApplicationService {
     }
   }
 
+  async editTodo(id: string, title: string) {
+    try {
+      await this.todoRepository.updateTitle(id, title);
+      const todoList = await this.todoRepository.fetchList();
+      this.dispatch(todoListActions.update({ todos: todoList }));
+    } catch (e) {
+      this.dispatch(todoListActions.failed());
+    }
+  }
+
   async changeDoneState(id: string, newState: boolean) {
     try {
       await this.todoRepository.update(id, newState);
