@@ -66,6 +66,7 @@ export class TodoList extends React.Component<Props, State> {
         <span style={{ display: "inline-block", width: 50 }}>#{todo.id}</span> 
         <span onClick={() => this.onClickTitle(todo.id)} style={{ display: "inline-block", width: 150 }} >{this.state.editingTodoId === todo.id ? <TodoForm idForEdit={todo.id} onEnter={() => this.onEnter()} /> : todo.title}</span>
         <input onChange={(e) => this.onCheckChanged(e)} type="checkbox" name="todo" value={todo.id} checked={todo.done} />
+        <span onClick={() => this.onClickDelete(todo.id)} style={{ marginLeft: 8 }}>🗑</span>
       </li>
     );
   }
@@ -81,6 +82,10 @@ export class TodoList extends React.Component<Props, State> {
   private onCheckChanged(e: React.ChangeEvent<HTMLInputElement>) {
     const { checked: done, value: id } = e.target;
     this.props.service.changeDoneState(id, done);
+  }
+
+  private onClickDelete(id: string) {
+    this.props.service.deleteTodo(id);
   }
 
   private renderInput() {

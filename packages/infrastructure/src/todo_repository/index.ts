@@ -85,6 +85,17 @@ export class TodoRepository {
     }
   }
 
+  async delete(id: string): Promise<any> {
+    const todoList: Todo[] = this.load();
+    const listWithoutDeleted = todoList.filter(t => t.id !== id);
+
+    this.save(listWithoutDeleted);
+
+    sleep(500);
+
+    return Promise.resolve();
+  }
+
   private save(todoList: Todo[]) {
     this.localStorage[STRAGE_KEY_TODO] = JSON.stringify(todoList);
   }
