@@ -14,12 +14,18 @@ export interface InitPayload {
   todos: Todo[];
 }
 
-const initFailed = actionCreator("initFailed");
+const failed = actionCreator("failed");
+
+const update: ActionCreator<UpdatePayload> = actionCreator("update");
+export interface UpdatePayload {
+  todos: Todo[];
+}
 
 export const actions = {
   startLoading,
   init,
-  initFailed,
+  failed,
+  update,
 }
 
 /* Reducer */
@@ -33,6 +39,9 @@ export const reducer: Reducer<TodoListState> = reducerWithInitialState(defaultSt
   .case(init, (state, { todos }) => {
     return StateHandler.initialized(todos);
   })
-  .case(initFailed, state => {
-    return StateHandler.initializeFailed(state);
-  });
+  .case(failed, state => {
+    return StateHandler.failed(state);
+  })
+  .case(update, (state, { todos }) => {
+    return StateHandler.updated(todos);
+  })

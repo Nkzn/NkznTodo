@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "build:tsc": "lerna run build:tsc",
+    "start:tsc": "lerna run start:tsc --parallel",
     "lint": "lerna run lint"
   },
   "devDependencies": {

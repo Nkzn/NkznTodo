@@ -1,3 +1,6 @@
 {
-  "extends": ["../../tslint.json", "tslint-react"]
+  "extends": ["../../tslint.json", "tslint-react"],
+  "rules": {
+    "jsx-no-lambda": { "severity": "none" }
+  }
 }

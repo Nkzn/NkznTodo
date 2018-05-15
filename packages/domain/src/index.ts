@@ -1,7 +1,7 @@
 export interface Todo {
-  id: number;
+  id: string;
   title: string;
-  description: string;
+  description?: string;
   done: boolean;
 }
 
@@ -32,16 +32,24 @@ export const TodoListStateHandler = {
   initialized(todos: Todo[]): TodoListState {
     return {
       loading: false,
-      todos: todos,
+      todos,
       hasError: false,
     }
   },
 
-  initializeFailed(prevState: TodoListState): TodoListState {
+  failed(prevState: TodoListState): TodoListState {
     return {
       ...prevState,
       loading: false,
       hasError: true,
     }
-  }
+  },
+
+  updated(todos: Todo[]): TodoListState {
+    return {
+      loading: false,
+      todos,
+      hasError: false,
+    }
+  },
 }

@@ -10,12 +10,12 @@ export class TodoRepository {
     this.localStorage = window.localStorage;
 
     if (!this.localStorage[STRAGE_KEY_TODO]) {
-      this.localStorage[STRAGE_KEY_TODO] = JSON.stringify([]);
+      this.save([]);
     }
   }
 
-  async fetch(id: number): Promise<Todo> {
-    const todoList: Todo[] = JSON.parse(this.localStorage[STRAGE_KEY_TODO]);
+  async fetch(id: string): Promise<Todo> {
+    const todoList: Todo[] = this.load();
     const todo = todoList.find(t => t.id === id);
 
     await sleep(500);
@@ -28,29 +28,59 @@ export class TodoRepository {
   }
 
   async fetchList(): Promise<Todo[]> {
-    const todoList: Todo[] = JSON.parse(this.localStorage[STRAGE_KEY_TODO]);
+    const todoList: Todo[] = this.load();
 
     await sleep(1000);
 
     return todoList;
   }
 
-  async addNew(title: string, description: string, done = false): Promise<Todo> {
+  async addNew(title: string, description?: string, done = false): Promise<Todo> {
     const newTodo: Todo = {
-      id: Date.now(),
+      id: `${this.calcNextid()}`,
       title,
       description,
       done
     }
 
-    const todoList: Todo[] = JSON.parse(this.localStorage[STRAGE_KEY_TODO]);
+    const todoList: Todo[] = this.load();
     todoList.push(newTodo);
 
-    this.localStorage[STRAGE_KEY_TODO] = JSON.stringify(todoList);
+    this.save(todoList);
 
     await sleep(1000);
 
     return newTodo;
+  }
+
+  async update(id: string, newState: boolean): Promise<any> {
+    const todoList: Todo[] = this.load();
+    const todo = todoList.find(t => t.id === id);
+
+    if (todo) {
+      todo.done = newState;
+      this.save(todoList);
+
+      sleep(500);
+
+      return Promise.resolve();
+    } else {
+      return Promise.reject(`id:${id} is not found.`);
+    }
+  }
+
+  private save(todoList: Todo[]) {
+    this.localStorage[STRAGE_KEY_TODO] = JSON.stringify(todoList);
+  }
+
+  private load(): Todo[] {
+    return JSON.parse(this.localStorage[STRAGE_KEY_TODO]);
+  }
+
+  private calcNextid(): number {
+    const todos = this.load();
+    const sortedTodos = todos.map(t => t.id).map(id => parseInt(id, 10)).sort();
+    return sortedTodos.length === 0 ? 0 : (sortedTodos[sortedTodos.length - 1] + 1);
   }
 }
 

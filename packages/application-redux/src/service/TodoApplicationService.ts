@@ -17,8 +17,28 @@ export class TodoApplicationService {
       const todoList = await this.todoRepository.fetchList();
       this.dispatch(todoListActions.init({ todos: todoList }));
     } catch (e) {
-      this.dispatch(todoListActions.initFailed());
+      this.dispatch(todoListActions.failed());
     }
 
+  }
+
+  async addNewTodo(title: string) {
+    try {
+      await this.todoRepository.addNew(title);
+      const todoList = await this.todoRepository.fetchList();
+      this.dispatch(todoListActions.update({ todos: todoList }));
+    } catch (e) {
+      this.dispatch(todoListActions.failed());
+    }
+  }
+
+  async changeDoneState(id: string, newState: boolean) {
+    try {
+      await this.todoRepository.update(id, newState);
+      const todoList = await this.todoRepository.fetchList();
+      this.dispatch(todoListActions.update({ todos: todoList }));
+    } catch (e) {
+      this.dispatch(todoListActions.failed());
+    }
   }
 }
