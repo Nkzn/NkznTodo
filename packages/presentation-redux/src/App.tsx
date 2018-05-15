@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from "react-redux";
 
-import { AppState, TodoApplicationService } from "nkzn-todo-application";
+import { AppState, TodoApplicationService } from "nkzn-todo-application-redux";
 import { TodoListState } from 'nkzn-todo-domain';
 
 interface IStateProps {

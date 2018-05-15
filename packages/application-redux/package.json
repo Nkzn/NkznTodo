@@ -1,5 +1,5 @@
 {
-  "name": "nkzn-todo-application",
+  "name": "nkzn-todo-application-redux",
   "version": "1.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
