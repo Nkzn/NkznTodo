@@ -39,7 +39,6 @@ export class TodoRepository {
     const newTodo: Todo = {
       id: `${this.calcNextid()}`,
       title,
-      description,
       done
     }
 
