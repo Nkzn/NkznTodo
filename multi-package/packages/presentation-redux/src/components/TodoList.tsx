@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TodoListState, Todo } from "nkzn-todo-domain";
-import { TodoApplicationService } from "nkzn-todo-application-redux";
+import { TodoApplicationService } from "nkzn-todo-application";
 import TodoForm from "../containers/TodoForm";
 
 export interface StateProps {

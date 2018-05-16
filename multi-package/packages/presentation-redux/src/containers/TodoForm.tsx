@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { TodoApplicationService } from "nkzn-todo-application-redux";
+import { TodoApplicationService } from "nkzn-todo-application";
 import { TodoForm, DispatcherProps } from "../components/TodoForm";
 import { todoListActions } from "../ducks";
 

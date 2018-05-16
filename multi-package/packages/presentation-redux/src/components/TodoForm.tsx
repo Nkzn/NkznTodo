@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TodoApplicationService } from "nkzn-todo-application-redux";
+import { TodoApplicationService } from "nkzn-todo-application";
 
 export interface DispatcherProps {
   service: TodoApplicationService;

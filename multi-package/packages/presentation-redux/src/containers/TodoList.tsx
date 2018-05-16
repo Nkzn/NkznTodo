@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { TodoApplicationService } from "nkzn-todo-application-redux";
+import { TodoApplicationService } from "nkzn-todo-application";
 import { TodoList, StateProps, DispatcherProps } from "../components/TodoList";
 import { Dispatch } from "redux";
 import { AppState, todoListActions } from "../ducks";
