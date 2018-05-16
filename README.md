@@ -52,6 +52,13 @@ $ cd packages/presentation-redux
 $ yarn start
 ```
 
+### Characteristic codes
+
+* [TodoApplicationService](multi-package/packages/application-redux/src/service/TodoApplicationService.ts)
+    * [ActionDispatcher](https://qiita.com/uryyyyyyy/items/d8bae6a7fca1c4732696) Pattern based Application Service.
+* [ducks/todoListState](multi-package/packages/application-redux/src/ducks/todoListState.ts)
+    * Messaging & State handling between Application Service <=> Presentation
+
 single-package
 ----------
 
