@@ -74,3 +74,10 @@ $ yarn start
 ```
 
 That's all!
+
+donate
+----------
+
+Welcome!
+
+![kyash](images/kyash.jpg)
