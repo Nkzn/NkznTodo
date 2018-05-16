@@ -105,7 +105,7 @@ export class TodoRepository {
 
   private calcNextid(): number {
     const todos = this.load();
-    const sortedTodos = todos.map(t => t.id).map(id => parseInt(id, 10)).sort();
+    const sortedTodos = todos.map(t => t.id).map(id => parseInt(id, 10)).sort((a, b) => a - b);
     return sortedTodos.length === 0 ? 0 : (sortedTodos[sortedTodos.length - 1] + 1);
   }
 }
