@@ -1,5 +1,13 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "ordered-imports": { "severity": "none" },
+    "interface-name": { "severity": "none" },
+    "object-literal-sort-keys": { "severity": "none" },
+    "no-console": { "severity": "none" },
+    "member-access": [true, "no-public"],
+    "jsx-no-lambda": { "severity": "none" }
+  },
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
