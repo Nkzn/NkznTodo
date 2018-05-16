@@ -1,7 +1,7 @@
 NkznTodo
 ==========
 
-My Flux + Layered Architecture sample.
+Layered Architecture based React application structure sample.
 
 ![ss](images/ss.gif)
 
