@@ -21,7 +21,7 @@ This sample uses monorepo with [lerna](https://github.com/lerna/lerna).
 | package | description |
 |---------|-------------|
 | presentation-redux | create-react-app based TypeScript Web App |
-| application-redux | Application Service & Redux Ducks |
+| application | Application Service & Redux Ducks **(No Redux Dependencies)** |
 | domain | Type Definition & Behavior Functions **(No Redux Dependencies)** |
 | infrastructure | Dummy Networking **(No Redux Dependencies)** |
 
@@ -52,9 +52,9 @@ $ yarn start
 
 ### Characteristic codes
 
-* [TodoApplicationService](multi-package/packages/application-redux/src/service/TodoApplicationService.ts)
+* [TodoApplicationService](multi-package/packages/application/src/service/TodoApplicationService.ts)
     * [ActionDispatcher](https://qiita.com/uryyyyyyy/items/d8bae6a7fca1c4732696) Pattern based Application Service.
-* [ducks/todoListState](multi-package/packages/application-redux/src/ducks/todoListState.ts)
+* [ducks/todoListState](multi-package/packages/presentation-redux/src/ducks/todoListState.ts)
     * Messaging & State handling between Application Service <=> Presentation
 
 single-package
