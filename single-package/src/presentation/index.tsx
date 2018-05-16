@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { appState } from "../application";
+import { appState } from "../presentation/ducks";
 import App from './App';
 import './index.css';
 

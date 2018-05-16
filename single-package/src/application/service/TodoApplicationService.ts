@@ -1,23 +1,22 @@
-import { Dispatch } from "redux";
 import { TodoRepository } from "../../infrastructure";
-import { todoListActions } from "../ducks";
+import { TodoListPresenter } from "../presenter/TodoListPresenter";
 
 export class TodoApplicationService {
 
   private todoRepository: TodoRepository;
 
-  constructor(private dispatch: Dispatch<any>) {
+  constructor(private presenter: TodoListPresenter) {
     this.todoRepository = new TodoRepository();
   }
 
   async init() {
-    this.dispatch(todoListActions.startLoading());
+    this.presenter.startLoading();
     
     try {
       const todoList = await this.todoRepository.fetchList();
-      this.dispatch(todoListActions.init({ todos: todoList }));
+      this.presenter.init(todoList);
     } catch (e) {
-      this.dispatch(todoListActions.failed());
+      this.presenter.failed();
     }
 
   }
@@ -26,9 +25,9 @@ export class TodoApplicationService {
     try {
       await this.todoRepository.addNew(title);
       const todoList = await this.todoRepository.fetchList();
-      this.dispatch(todoListActions.update({ todos: todoList }));
+      this.presenter.update(todoList);
     } catch (e) {
-      this.dispatch(todoListActions.failed());
+      this.presenter.failed();
     }
   }
 
@@ -36,9 +35,9 @@ export class TodoApplicationService {
     try {
       await this.todoRepository.updateTitle(id, title);
       const todoList = await this.todoRepository.fetchList();
-      this.dispatch(todoListActions.update({ todos: todoList }));
+      this.presenter.update(todoList);
     } catch (e) {
-      this.dispatch(todoListActions.failed());
+      this.presenter.failed();
     }
   }
 
@@ -46,9 +45,9 @@ export class TodoApplicationService {
     try {
       await this.todoRepository.delete(id);
       const todoList = await this.todoRepository.fetchList();
-      this.dispatch(todoListActions.update({ todos: todoList }));
+      this.presenter.update(todoList);
     } catch (e) {
-      this.dispatch(todoListActions.failed());
+      this.presenter.failed();
     }
   }
 
@@ -56,9 +55,9 @@ export class TodoApplicationService {
     try {
       await this.todoRepository.update(id, newState);
       const todoList = await this.todoRepository.fetchList();
-      this.dispatch(todoListActions.update({ todos: todoList }));
+      this.presenter.update(todoList);
     } catch (e) {
-      this.dispatch(todoListActions.failed());
+      this.presenter.failed();
     }
   }
 }
