@@ -59,6 +59,8 @@ single-package
 
 The single-package punctuate Layered Architecture with plain directory.
 
+This is **dangerous** structure because `domain` code can call `presentation` code.
+
 ### Getting Started
 
 ```
