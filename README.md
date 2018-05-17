@@ -21,7 +21,7 @@ This sample uses monorepo with [lerna](https://github.com/lerna/lerna).
 | package | description |
 |---------|-------------|
 | presentation-redux | create-react-app based TypeScript Web App |
-| application | Application Service & Redux Ducks **(No Redux Dependencies)** |
+| application | Application Service **(No Redux Dependencies)** |
 | domain | Type Definition & Behavior Functions **(No Redux Dependencies)** |
 | infrastructure | Dummy Networking **(No Redux Dependencies)** |
 
