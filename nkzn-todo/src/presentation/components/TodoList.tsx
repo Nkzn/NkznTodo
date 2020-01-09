@@ -1,17 +1,16 @@
-import * as React from "react";
+import React from "react";
 import { TodoListState, Todo } from "../../domain";
 import { TodoApplicationService } from "../../application/service/TodoApplicationService";
-import TodoForm from "../containers/TodoForm";
 
-export interface StateProps {
+type Props = {
   todoList: TodoListState;
-}
-
-export interface DispatcherProps {
   service: TodoApplicationService;
-}
-
-type Props = StateProps & DispatcherProps;
+  // Component DI
+  TodoForm: React.ComponentType<{
+    idForEdit?: string;
+    onEnter?: () => void;
+  }>
+};
 
 interface State {
   editingTodoId?: string;
@@ -61,6 +60,7 @@ export class TodoList extends React.Component<Props, State> {
   }
   
   private renderTodo(todo: Todo) {
+    const TodoForm = this.props.TodoForm;
     return (
       <li key={todo.id}>
         <span style={{ display: "inline-block", width: 50 }}>#{todo.id}</span> 
@@ -89,6 +89,7 @@ export class TodoList extends React.Component<Props, State> {
   }
 
   private renderInput() {
+    const TodoForm = this.props.TodoForm;
     return (
       <li key={"add"}>
         <TodoForm />

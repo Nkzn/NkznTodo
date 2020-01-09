@@ -1,24 +1,26 @@
-import { connect } from "react-redux";
+import React from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import { TodoApplicationService } from "../../application/service/TodoApplicationService";
-import { TodoList, StateProps, DispatcherProps } from "../components/TodoList";
-import { Dispatch } from "redux";
+import { TodoList as TodoListComponent } from "../components/TodoList";
 import { AppState, todoListActions } from "../ducks";
+import { TodoListState } from "../../domain";
+import { TodoForm } from './TodoForm';
 
-function mapStateToProps(appState: AppState): StateProps {
-  return {
-    todoList: appState.todoList
-  }
-}
+export const TodoList: React.FC = () => {
+  const todoList = useSelector<AppState, TodoListState>(state => state.todoList);
+  const dispatch = useDispatch();
+  const service = new TodoApplicationService({
+    startLoading: () => dispatch(todoListActions.startLoading()),
+    init: (todoList) => dispatch(todoListActions.init({ todos: todoList })),
+    failed: () => dispatch(todoListActions.failed()),
+    update: (todoList) => dispatch(todoListActions.update({ todos: todoList }))
+  });
 
-function mapDispatchToProps(dispatch: Dispatch): DispatcherProps {
-  return {
-    service: new TodoApplicationService({
-      startLoading: () => dispatch(todoListActions.startLoading()),
-      init: (todoList) => dispatch(todoListActions.init({ todos: todoList })),
-      failed: () => dispatch(todoListActions.failed()),
-      update: (todoList) => dispatch(todoListActions.update({ todos: todoList }))
-    })
-  }  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+  return (
+    <TodoListComponent
+      todoList={todoList}
+      service={service}
+      TodoForm={props => <TodoForm {...props} />}
+    />
+  );
+};

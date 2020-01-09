@@ -1,13 +1,10 @@
 import * as React from "react";
 import { TodoApplicationService } from "../../application/service/TodoApplicationService";
 
-export interface DispatcherProps {
-  service: TodoApplicationService;
-}
-
-type Props = DispatcherProps & {
+type Props = {
   idForEdit?: string;
   onEnter?: () => void;
+  service: TodoApplicationService;
 }
 
 interface State {
