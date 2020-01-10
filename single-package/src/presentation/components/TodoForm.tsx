@@ -1,45 +1,28 @@
-import * as React from "react";
-import { TodoApplicationService } from "../../application";
+import React from "react";
 
-export interface DispatcherProps {
-  service: TodoApplicationService;
-}
-
-type Props = DispatcherProps & {
+type Props = {
   idForEdit?: string;
   onEnter?: () => void;
+  editTodo: (id: string, title: string) => void;
+  addNewTodo: (title: string) => void;
 }
 
-interface State {
-  title: string;
-}
+export const TodoForm: React.FC<Props> = ({ idForEdit, onEnter, editTodo, addNewTodo }) => {
+  const [ title, setTitle ]  = React.useState("");
 
-export class TodoForm extends React.Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      title: ""
-    }
-  }
-
-  onKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      if (this.props.idForEdit) {
-        this.props.service.editTodo(this.props.idForEdit, this.state.title || "");
-        // tslint:disable-next-line:no-unused-expression
-        this.props.onEnter && this.props.onEnter();
+      if (idForEdit) {
+        editTodo(idForEdit, title || "");
+        onEnter && onEnter();
       } else {
-        this.props.service.addNewTodo(this.state.title || "");
+        addNewTodo(title || "");
       }
-      this.setState({ title: "" });
+      setTitle("");
     }
   }
 
-  render() {
-    return (
-      <input type="text" value={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} onKeyPress={(e) => this.onKeyPress(e)} />
-    );
-  }
-}
+  return (
+    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} onKeyPress={onKeyPress} />
+  );
+};

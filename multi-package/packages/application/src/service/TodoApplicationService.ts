@@ -1,63 +1,66 @@
 import { TodoRepository } from "nkzn-todo-infrastructure";
 import { TodoListPresenter } from "../presenter/TodoListPresenter";
 
-export class TodoApplicationService {
+export const createTodoApplicationServices = (presenter: TodoListPresenter) => {
+  const todoRepository = new TodoRepository();
 
-  private todoRepository: TodoRepository;
-
-  constructor(private presenter: TodoListPresenter) {
-    this.todoRepository = new TodoRepository();
-  }
-
-  async init() {
-    this.presenter.startLoading();
+  const init = async () => {
+    presenter.startLoading();
     
     try {
-      const todoList = await this.todoRepository.fetchList();
-      this.presenter.init(todoList);
+      const todoList = await todoRepository.fetchList();
+      presenter.init(todoList);
     } catch (e) {
-      this.presenter.failed();
+      presenter.failed();
     }
 
   }
 
-  async addNewTodo(title: string) {
+  const addNewTodo = async (title: string) => {
     try {
-      await this.todoRepository.addNew(title);
-      const todoList = await this.todoRepository.fetchList();
-      this.presenter.update(todoList);
+      await todoRepository.addNew(title);
+      const todoList = await todoRepository.fetchList();
+      presenter.update(todoList);
     } catch (e) {
-      this.presenter.failed();
+      presenter.failed();
     }
   }
 
-  async editTodo(id: string, title: string) {
+  const editTodo = async (id: string, title: string) => {
     try {
-      await this.todoRepository.updateTitle(id, title);
-      const todoList = await this.todoRepository.fetchList();
-      this.presenter.update(todoList);
+      await todoRepository.updateTitle(id, title);
+      const todoList = await todoRepository.fetchList();
+      presenter.update(todoList);
     } catch (e) {
-      this.presenter.failed();
+      presenter.failed();
     }
   }
 
-  async deleteTodo(id: string) {
+  const deleteTodo = async (id: string) => {
     try {
-      await this.todoRepository.delete(id);
-      const todoList = await this.todoRepository.fetchList();
-      this.presenter.update(todoList);
+      await todoRepository.delete(id);
+      const todoList = await todoRepository.fetchList();
+      presenter.update(todoList);
     } catch (e) {
-      this.presenter.failed();
+      presenter.failed();
     }
   }
 
-  async changeDoneState(id: string, newState: boolean) {
+  const changeDoneState = async (id: string, newState: boolean) => {
     try {
-      await this.todoRepository.update(id, newState);
-      const todoList = await this.todoRepository.fetchList();
-      this.presenter.update(todoList);
+      await todoRepository.update(id, newState);
+      const todoList = await todoRepository.fetchList();
+      presenter.update(todoList);
     } catch (e) {
-      this.presenter.failed();
+      presenter.failed();
     }
   }
-}
+
+  return {
+    init,
+    addNewTodo,
+    editTodo,
+    deleteTodo,
+    changeDoneState,
+  };
+};

@@ -1,2 +1,2 @@
-export { TodoApplicationService } from "./service/TodoApplicationService";
+export { createTodoApplicationServices } from "./service/TodoApplicationService";
 export { TodoListPresenter } from "./presenter/TodoListPresenter";

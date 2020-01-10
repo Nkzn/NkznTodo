@@ -1,18 +1,20 @@
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
-import { TodoApplicationService } from "../../application";
-import { TodoForm, DispatcherProps } from "../components/TodoForm";
-import { todoListActions } from "../ducks";
+import React from 'react';
+import { TodoForm as TodoFormComponent } from "../components/TodoForm";
+import { useTodoApplicationService } from './useTodoApplicationService';
 
-function mapDispatchToProps(dispatch: Dispatch): DispatcherProps {
-  return {
-    service: new TodoApplicationService({
-      startLoading: () => dispatch(todoListActions.startLoading()),
-      init: (todoList) => dispatch(todoListActions.init({ todos: todoList })),
-      failed: () => dispatch(todoListActions.failed()),
-      update: (todoList) => dispatch(todoListActions.update({ todos: todoList }))
-    })
-  }
-}
+type Props = {
+  idForEdit?: string;
+  onEnter?: () => void;
+};
 
-export default connect(void 0, mapDispatchToProps)(TodoForm);
+export const TodoForm: React.FC<Props> = (props) => {
+  const [{ editTodo, addNewTodo }] = useTodoApplicationService();
+
+  return (
+    <TodoFormComponent
+      {...props}
+      editTodo={editTodo}
+      addNewTodo={addNewTodo}
+    />
+  )
+};

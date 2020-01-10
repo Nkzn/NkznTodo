@@ -1,24 +1,34 @@
-import { connect } from "react-redux";
-import { TodoApplicationService } from "nkzn-todo-application";
-import { TodoList, StateProps, DispatcherProps } from "../components/TodoList";
-import { Dispatch } from "redux";
-import { AppState, todoListActions } from "../ducks";
+import React, { useState, useEffect } from 'react';
+import { TodoList as TodoListComponent } from "../components/TodoList";
+import { TodoForm } from './TodoForm';
+import { useTodoApplicationService } from './useTodoApplicationService';
 
-function mapStateToProps(appState: AppState): StateProps {
-  return {
-    todoList: appState.todoList
+export const TodoList: React.FC = () => {
+  const [ initializeCalled, setInitializeCalled ] = useState(false);
+  const [ { init, changeDoneState, deleteTodo }, { todos, loading, hasError } ] = useTodoApplicationService();
+
+  useEffect(() => {
+    if (!initializeCalled) {
+      init();
+      setInitializeCalled(true);
+    }
+  }, [init, initializeCalled]);
+
+  if (loading) {
+    return <Loading />
   }
-}
 
-function mapDispatchToProps(dispatch: Dispatch): DispatcherProps {
-  return {
-    service: new TodoApplicationService({
-      startLoading: () => dispatch(todoListActions.startLoading()),
-      init: (todoList) => dispatch(todoListActions.init({ todos: todoList })),
-      failed: () => dispatch(todoListActions.failed()),
-      update: (todoList) => dispatch(todoListActions.update({ todos: todoList }))
-    })
-  }  
-}
+  return (
+    <TodoListComponent
+      todos={todos}
+      hasError={hasError}
+      changeDoneState={changeDoneState}
+      deleteTodo={deleteTodo}
+      TodoForm={props => <TodoForm {...props} />}
+    />
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+const Loading: React.FC = () => (
+  <div>loading...</div>
+);
