@@ -18,12 +18,20 @@ export const TodoList: React.FC = () => {
     return <Loading />
   }
 
+  const onCheckChanged = (id: string, done: boolean) => {
+    changeDoneState(id, done);
+  };
+
+  const onClickDelete = (id: string) => {
+    deleteTodo(id);
+  };
+
   return (
     <TodoListComponent
       todos={todos}
       hasError={hasError}
-      changeDoneState={changeDoneState}
-      deleteTodo={deleteTodo}
+      onCheckChanged={onCheckChanged}
+      onClickDelete={onClickDelete}
       TodoForm={props => <TodoForm {...props} />}
     />
   );

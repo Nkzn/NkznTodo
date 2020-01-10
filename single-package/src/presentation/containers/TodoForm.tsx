@@ -10,11 +10,19 @@ type Props = {
 export const TodoForm: React.FC<Props> = (props) => {
   const [{ editTodo, addNewTodo }] = useTodoApplicationService();
 
+  const onEnterForEdit = (id: string, title: string | undefined) => {
+    editTodo(id, title || "");
+  };
+
+  const onEnterForCreate = (title: string | undefined) => {
+    addNewTodo(title || "");
+  };
+
   return (
     <TodoFormComponent
       {...props}
-      editTodo={editTodo}
-      addNewTodo={addNewTodo}
+      onEnterForEdit={onEnterForEdit}
+      onEnterForCreate={onEnterForCreate}
     />
   )
 };

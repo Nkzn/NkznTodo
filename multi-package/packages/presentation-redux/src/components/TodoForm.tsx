@@ -3,20 +3,20 @@ import React from "react";
 type Props = {
   idForEdit?: string;
   onEnter?: () => void;
-  editTodo: (id: string, title: string) => void;
-  addNewTodo: (title: string) => void;
+  onEnterForEdit: (id: string, title: string | undefined) => void;
+  onEnterForCreate: (title: string | undefined) => void;
 }
 
-export const TodoForm: React.FC<Props> = ({ idForEdit, onEnter, editTodo, addNewTodo }) => {
+export const TodoForm: React.FC<Props> = ({ idForEdit, onEnter, onEnterForEdit, onEnterForCreate }) => {
   const [ title, setTitle ]  = React.useState("");
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (idForEdit) {
-        editTodo(idForEdit, title || "");
+        onEnterForEdit(idForEdit, title);
         onEnter && onEnter();
       } else {
-        addNewTodo(title || "");
+        onEnterForCreate(title);
       }
       setTitle("");
     }
