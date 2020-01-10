@@ -1,26 +1,34 @@
-import React from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import { TodoApplicationService } from "../../application/service/TodoApplicationService";
+import React, { useState, useEffect } from 'react';
 import { TodoList as TodoListComponent } from "../components/TodoList";
-import { AppState, todoListActions } from "../ducks";
-import { TodoListState } from "../../domain";
 import { TodoForm } from './TodoForm';
+import { useTodoApplicationService } from './useTodoApplicationService';
 
 export const TodoList: React.FC = () => {
-  const todoList = useSelector<AppState, TodoListState>(state => state.todoList);
-  const dispatch = useDispatch();
-  const service = new TodoApplicationService({
-    startLoading: () => dispatch(todoListActions.startLoading()),
-    init: (todoList) => dispatch(todoListActions.init({ todos: todoList })),
-    failed: () => dispatch(todoListActions.failed()),
-    update: (todoList) => dispatch(todoListActions.update({ todos: todoList }))
-  });
+  const [ initializeCalled, setInitializeCalled ] = useState(false);
+  const [ { init, changeDoneState, deleteTodo }, { todos, loading, hasError } ] = useTodoApplicationService();
+
+  useEffect(() => {
+    if (!initializeCalled) {
+      init();
+      setInitializeCalled(true);
+    }
+  }, [init, initializeCalled]);
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <TodoListComponent
-      todoList={todoList}
-      service={service}
+      todos={todos}
+      hasError={hasError}
+      changeDoneState={changeDoneState}
+      deleteTodo={deleteTodo}
       TodoForm={props => <TodoForm {...props} />}
     />
   );
 };
+
+const Loading: React.FC = () => (
+  <div>loading...</div>
+);
