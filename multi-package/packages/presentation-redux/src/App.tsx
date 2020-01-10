@@ -1,12 +1,12 @@
-import * as React from 'react';
-import TodoList from "./containers/TodoList";
+import React from 'react';
+import { TodoList } from "./containers/TodoList";
 
-export default class App extends React.PureComponent<any> {
-  render() {
-    return (
-      <div>
-        <TodoList />
-      </div>    
-    );
-  }
+const App: React.FC = () => {
+  return (
+    <div>
+      <TodoList />
+    </div>    
+  );
 }
+
+export default App;
