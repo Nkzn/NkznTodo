@@ -1,98 +1,59 @@
-import * as React from "react";
-import { TodoListState, Todo } from "../../domain";
-import { TodoApplicationService } from "../../application";
-import TodoForm from "../containers/TodoForm";
+import React, { useState } from "react";
+import { Todo } from "../../domain";
 
-export interface StateProps {
-  todoList: TodoListState;
-}
+type Props = {
+  todos: Todo[];
+  hasError: boolean;
+  changeDoneState: (id: string, done: boolean) => void;
+  deleteTodo: (id: string) => void;
+  TodoForm: React.ComponentType<{
+    idForEdit?: string;
+    onEnter?: () => void;
+  }>
+};
 
-export interface DispatcherProps {
-  service: TodoApplicationService;
-}
+export const TodoList: React.FC<Props> = ({
+  todos,
+  hasError,
+  changeDoneState,
+  deleteTodo,
+  TodoForm
+}) => {
+  const [ editingTodoId, setEditingTodoId ] = useState<string>();
 
-type Props = StateProps & DispatcherProps;
-
-interface State {
-  editingTodoId?: string;
-}
-
-export class TodoList extends React.Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      editingTodoId: void 0
-    }
+  const onEnter = () => {
+    setEditingTodoId(void 0);
   }
 
-  componentDidMount() {
-    this.props.service.init();
-  }
+  const onClickTitle = (id: string) => {
+    setEditingTodoId(id);
+  };
 
-  render() {
-    const { loading, todos, hasError } = this.props.todoList;
-
-    if (loading) {
-      return this.renderLoading();
-    }
-
-    return (
-      <div>
-        {this.renderTodos(todos)}
-        {hasError && <span style={{color: "red"}}>エラーがありました</span>}
-      </div>
-    );
-  }
-
-  private renderLoading() {
-    return (
-      <div>loading...</div>
-    )
-  }
-  
-  private renderTodos(todos: Todo[]) {
-    return (
-      <ul>
-        {todos.map(todo => this.renderTodo(todo))}
-        {this.renderInput()}
-      </ul>
-    );
-  }
-  
-  private renderTodo(todo: Todo) {
-    return (
-      <li key={todo.id}>
-        <span style={{ display: "inline-block", width: 50 }}>#{todo.id}</span> 
-        <span onClick={() => this.onClickTitle(todo.id)} style={{ display: "inline-block", width: 150 }} >{this.state.editingTodoId === todo.id ? <TodoForm idForEdit={todo.id} onEnter={() => this.onEnter()} /> : todo.title}</span>
-        <input onChange={(e) => this.onCheckChanged(e)} type="checkbox" name="todo" value={todo.id} checked={todo.done} />
-        <span onClick={() => this.onClickDelete(todo.id)} style={{ marginLeft: 8 }}>🗑</span>
-      </li>
-    );
-  }
-
-  private onEnter() {
-    this.setState({ editingTodoId: void 0 })
-  }
-
-  private onClickTitle(id: string) {
-    this.setState({ editingTodoId: id });
-  }
-
-  private onCheckChanged(e: React.ChangeEvent<HTMLInputElement>) {
+  const onCheckChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked: done, value: id } = e.target;
-    this.props.service.changeDoneState(id, done);
-  }
+    changeDoneState(id, done);
+  };
 
-  private onClickDelete(id: string) {
-    this.props.service.deleteTodo(id);
-  }
+  const onClickDelete = (id: string) => {
+    deleteTodo(id);
+  };
 
-  private renderInput() {
-    return (
-      <li key={"add"}>
-        <TodoForm />
-      </li>
-    );
-  }
-}
+  return (
+    <div>
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}>
+            <span style={{ display: "inline-block", width: 50 }}>#{todo.id}</span> 
+            <span onClick={() => onClickTitle(todo.id)} style={{ display: "inline-block", width: 150 }} >{editingTodoId === todo.id ? <TodoForm idForEdit={todo.id} onEnter={() => onEnter()} /> : todo.title}</span>
+            <input onChange={(e) => onCheckChanged(e)} type="checkbox" name="todo" value={todo.id} checked={todo.done} />
+            <span onClick={() => onClickDelete(todo.id)} style={{ marginLeft: 8 }}>🗑</span>
+          </li>
+        ))}
+        <li>
+          <TodoForm />
+        </li>
+      </ul>
+      {hasError && <span style={{color: "red"}}>エラーがありました</span>}
+    </div>
+  );
+};
